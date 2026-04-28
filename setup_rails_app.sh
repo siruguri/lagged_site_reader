@@ -45,16 +45,21 @@ if ! command -v bundle >/dev/null 2>&1; then
 fi
 echo "    bundler: $(bundle -v)"
 
-if ! command -v rails >/dev/null 2>&1; then
-  echo "    rails:   not installed; running \`gem install rails -v '~> 8.0'\`"
-  gem install rails -v '~> 8.0' --no-document
+# Always ensure a Rails 8.x gem is installed (idempotent if already there).
+echo "    rails:   ensuring \`~> 8.0\` is installed..."
+gem install rails -v '~> 8.0' --no-document >/dev/null
+
+# Pick the highest installed 8.x version. We invoke `rails new` with the
+# underscore-version syntax so we get Rails 8 even if Rails 7 is also
+# installed system-wide and is the default-dispatch version.
+RAILS_BIN_VERSION="$(gem list rails 2>/dev/null \
+                      | grep -oE '8\.[0-9]+\.[0-9]+' \
+                      | sort -V | tail -1)"
+if [ -z "$RAILS_BIN_VERSION" ]; then
+  echo "ERROR: failed to install or detect a Rails 8.x gem. Aborting."
+  exit 1
 fi
-rails_version="$(rails -v | awk '{print $2}')"
-echo "    rails:   $rails_version"
-case "$rails_version" in
-  8.*) ;;
-  *)   echo "WARNING: this script targets Rails 8.x but found $rails_version. Continuing anyway." ;;
-esac
+echo "    rails:   using Rails $RAILS_BIN_VERSION"
 echo
 
 # ---- 2. refuse if the app already exists -----------------------------------
@@ -82,8 +87,8 @@ echo
 #   --skip-bundle                      -- we'll bundle install ourselves after
 #                                          appending gems
 #   --skip-kamal --skip-docker         -- no deploy plumbing for a personal tool
-echo ">>> Running \`rails new\` ..."
-rails new . \
+echo ">>> Running \`rails _${RAILS_BIN_VERSION}_ new\` ..."
+rails "_${RAILS_BIN_VERSION}_" new . \
   --force \
   --database=sqlite3 \
   --skip-test \
