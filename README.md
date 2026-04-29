@@ -27,12 +27,31 @@ When it finishes, try:
 
 ```sh
 bin/rails nc_archive:healthcheck         # confirms WP REST API is reachable
-bin/rails 'nc_archive:backfill[6]'       # backfill last 6 months
-bin/rails nc_archive:daily               # daily incremental crawl
+
+# Backfill modes:
+bin/rails 'nc_archive:backfill[6]'       # one arg: posts from NOW back to N months ago
+bin/rails 'nc_archive:backfill[10,2]'    # two args [start, span]: a 2-month WINDOW
+                                         # starting at 10 months ago and going further
+                                         # back -- i.e. posts published between
+                                         # 10 months ago and 12 months ago
+bin/rails nc_archive:daily               # posts from NOW back to whatever is the
+                                         # newest post already stored locally
 
 # In a separate terminal, to run the scheduler:
 bundle exec sidekiq -C config/sidekiq.yml
 ```
+
+The three modes cover:
+
+- **Catch up**: `nc_archive:daily` — the cron job. Walks back from "now" until it
+  hits the newest archived post, so re-running is cheap.
+- **Initial load**: `nc_archive:backfill[N]` — walks back N months from now.
+- **Targeted window**: `nc_archive:backfill[N, S]` — walks an S-month slice
+  starting at N months ago and going further back, i.e. posts published
+  between N months ago and (N+S) months ago. Useful for filling specific
+  gaps or hydrating just the part of history you're about to read
+  (e.g. `[4, 1]` for the month that just became ripe under your 4-month
+  reading lag).
 
 ## Layout (after setup)
 
