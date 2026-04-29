@@ -1,0 +1,54 @@
+<% content_for :title, "Naked Capitalism Archive" %>
+
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  h1   { margin-bottom: 0.25rem; }
+  .sub { color: #666; margin-top: 0; }
+  dl   { display: grid; grid-template-columns: max-content 1fr; gap: 0.4rem 1.5rem; margin: 1.5rem 0; }
+  dt   { font-weight: 600; color: #555; }
+  dd   { margin: 0; font-variant-numeric: tabular-nums; }
+  table { border-collapse: collapse; margin-top: 0.5rem; }
+  th, td { padding: 0.4rem 1rem; text-align: left; border-bottom: 1px solid #eee; font-variant-numeric: tabular-nums; }
+  th   { font-weight: 600; color: #555; }
+  code { background: #f4f4f4; padding: 0.1em 0.3em; border-radius: 3px; }
+  .empty { background: #fffbe6; border: 1px solid #ffe58f; padding: 1rem; border-radius: 6px; }
+</style>
+
+<h1>Naked Capitalism Archive</h1>
+<p class="sub">Local read-on-a-lag archive of nakedcapitalism.com posts.</p>
+
+<% if @total.zero? %>
+  <div class="empty">
+    <p><strong>No posts archived yet.</strong></p>
+    <p>Backfill the last 6 months:</p>
+    <p><code>bin/rails 'nc_archive:backfill[6]'</code></p>
+    <p>Or smoke-test the API first:</p>
+    <p><code>bin/rails nc_archive:healthcheck</code></p>
+  </div>
+<% else %>
+  <dl>
+    <dt>Oldest post</dt>
+    <dd><%= @oldest_published_at&.strftime("%Y-%m-%d %H:%M UTC") %></dd>
+
+    <dt>Newest post</dt>
+    <dd><%= @newest_published_at&.strftime("%Y-%m-%d %H:%M UTC") %></dd>
+
+    <dt>Total posts</dt>
+    <dd><%= number_with_delimiter(@total) %></dd>
+  </dl>
+
+  <h2>Posts per type</h2>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Count</th></tr>
+    </thead>
+    <tbody>
+      <% @counts_by_type.sort_by { |_type, count| -count }.each do |type, count| %>
+        <tr>
+          <td><%= type %></td>
+          <td><%= number_with_delimiter(count) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
