@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   resources :posts, only: [:index]
+  get "posts/:post_type", to: "posts#by_type", as: :posts_by_type,
+      constraints: { post_type: /long_form|links_roundup/ }
 
   # Defines the root path route ("/")
   root "posts#index"
