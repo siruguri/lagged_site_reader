@@ -1,0 +1,72 @@
+# docker-compose for personal-tool deployment.
+#
+# Three services:
+#   redis    — Sidekiq's broker. Persistent volume so scheduled jobs survive
+#              container restarts.
+#   web      — Rails / Puma, bound to localhost only (front with Caddy/nginx
+#              for HTTPS). Owns running migrations on first start.
+#   sidekiq  — Background workers + sidekiq-scheduler cron.
+#
+# Web and sidekiq share the SQLite file via a named volume. SQLite cross-
+# container access uses POSIX file locks, which work on Docker named volumes
+# (overlay2/local FS). Fine for low write volume; if you ever go multi-user,
+# switch to Postgres.
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  web:
+    build: .
+    image: nakedcap-archiver:latest
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_LOG_TO_STDOUT: "1"
+      RAILS_SERVE_STATIC_FILES: "1"
+      REDIS_URL: redis://redis:6379/0
+      WEB_CONCURRENCY: "1"
+      RAILS_MAX_THREADS: "3"
+    volumes:
+      - sqlite_data:/rails/db
+      - app_storage:/rails/storage
+    ports:
+      # Bind to localhost only — put a reverse proxy in front for HTTPS.
+      - "127.0.0.1:3000:3000"
+    command: ["bin/rails", "server", "-b", "0.0.0.0"]
+
+  sidekiq:
+    build: .
+    image: nakedcap-archiver:latest
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_started
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_LOG_TO_STDOUT: "1"
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - sqlite_data:/rails/db
+      - app_storage:/rails/storage
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+
+volumes:
+  redis_data:
+  sqlite_data:
+  app_storage:

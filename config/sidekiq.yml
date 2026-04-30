@@ -1,0 +1,12 @@
+# Sidekiq + sidekiq-scheduler configuration.
+# Run with: bundle exec sidekiq -C config/sidekiq.yml
+:concurrency: 2
+:queues:
+  - default
+
+:scheduler:
+  :schedule:
+    naked_capitalism_daily_crawl:
+      cron: "15 4 * * *"        # 04:15 UTC every day
+      class: NakedCapitalismDailyCrawlJob
+      description: "Daily incremental crawl of nakedcapitalism.com"

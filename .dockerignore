@@ -1,0 +1,46 @@
+# Don't bake your local junk into the image.
+
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# Local secrets — pass via env, not the image.
+.env
+.env.*
+!.env.example
+
+# Logs and temp
+log/*
+!log/.keep
+tmp/*
+!tmp/.keep
+storage/*
+!storage/.keep
+
+# Local SQLite — production volume holds the real one.
+db/*.sqlite3
+db/*.sqlite3-journal
+db/*.sqlite3-wal
+db/*.sqlite3-shm
+
+# Editor/OS junk
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Setup-stash (intermediate dir from setup_rails_app.sh)
+.archiver_stash/
+
+# Docs/config that doesn't need to be in the image
+README.rails_default.md
+DEPLOY.md
+setup_rails_app.sh
+bin/crawl_smoke_test.rb
+
+# Don't recursively copy the Dockerfile into builds
+Dockerfile
+.dockerignore
+docker-compose*.yml

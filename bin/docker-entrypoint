@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+# Run db:prepare (create + migrate, seed if needed) before starting the web
+# server. Sidekiq doesn't need this — it'll bail loudly if migrations are
+# missing, which surfaces ordering problems immediately.
+if [ "${1:-}" = "bin/rails" ] && [ "${2:-}" = "server" ]; then
+  ./bin/rails db:prepare
+fi
+
+exec "$@"
