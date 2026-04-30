@@ -64,3 +64,16 @@ code {
 }
 
 .back-link { display: inline-block; margin-bottom: 1rem; font-size: 0.95rem; }
+
+tr.is-read td        { color: #999; }
+tr.is-read td a      { color: #888; }
+.read-marker {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.05em 0.4em;
+  font-size: 0.75rem;
+  background: #eee;
+  color: #666;
+  border-radius: 3px;
+  vertical-align: middle;
+}

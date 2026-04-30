@@ -37,11 +37,67 @@
     </thead>
     <tbody>
       <% @posts.each do |post| %>
-        <tr>
+        <tr class="post-row <%= "is-read" if post.read? %>">
           <td class="post-date"><%= post.published_at.strftime("%Y-%m-%d") %></td>
-          <td><%= link_to post.title, post.url, target: "_blank", rel: "noopener" %></td>
+          <td>
+            <%= link_to post.title, post.url,
+                target: "_blank",
+                rel: "noopener",
+                class: "post-link",
+                data: { mark_read_url: open_post_path(post) } %>
+            <% if post.read? %>
+              <span class="read-marker">read <%= post.read_at.strftime("%Y-%m-%d") %></span>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <script>
+    // Mark-as-read on click. The browser handles target=_blank natively, so
+    // the source URL opens in a new tab regardless. We fire a fetch() in
+    // parallel to record the read and update this row inline.
+    (function () {
+      function formatDate(iso) {
+        // YYYY-MM-DD from an ISO 8601 string, in the user's local TZ.
+        const d = new Date(iso);
+        if (isNaN(d)) return "";
+        const y  = d.getFullYear();
+        const m  = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${dd}`;
+      }
+
+      function markRowAsRead(link, readAtIso) {
+        const row = link.closest("tr.post-row");
+        if (!row) return;
+        row.classList.add("is-read");
+        const cell = link.parentNode;
+        if (!cell.querySelector(".read-marker")) {
+          const span = document.createElement("span");
+          span.className = "read-marker";
+          span.textContent = `read ${formatDate(readAtIso)}`;
+          cell.appendChild(span);
+        }
+      }
+
+      document.addEventListener("click", function (event) {
+        const link = event.target.closest("a.post-link[data-mark-read-url]");
+        if (!link) return;
+        // Don't preventDefault: target=_blank handles the new tab.
+        const url = link.dataset.markReadUrl;
+        fetch(url, {
+          method: "GET",
+          headers: { "Accept": "application/json" },
+          credentials: "same-origin"
+        })
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .then(function (data) {
+            if (data && data.read_at) markRowAsRead(link, data.read_at);
+          })
+          .catch(function (err) { console.error("mark-read failed", err); });
+      });
+    })();
+  </script>
 <% end %>

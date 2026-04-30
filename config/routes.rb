@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  resources :posts, only: [:index]
+  resources :posts, only: [:index] do
+    member do
+      get :open
+    end
+  end
   get "posts/:post_type", to: "posts#by_type", as: :posts_by_type,
       constraints: { post_type: /long_form|links_roundup/ }
 

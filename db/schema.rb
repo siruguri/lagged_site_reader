@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_26_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_29_000001) do
   create_table "posts", force: :cascade do |t|
     t.string "author_name"
     t.text "categories_json"
@@ -24,6 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_000001) do
     t.datetime "modified_at"
     t.string "post_type", null: false
     t.datetime "published_at", null: false
+    t.datetime "read_at"
     t.string "slug", null: false
     t.text "tags_json"
     t.string "title", null: false
@@ -33,6 +34,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_000001) do
     t.bigint "wp_id", null: false
     t.index ["post_type"], name: "index_posts_on_post_type"
     t.index ["published_at"], name: "index_posts_on_published_at"
+    t.index ["read_at"], name: "index_posts_on_read_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["wp_id"], name: "index_posts_on_wp_id", unique: true
   end

@@ -30,6 +30,23 @@ class PostsController < ApplicationController
                         .count
   end
 
+  # Click-tracking endpoint. Used two ways:
+  #   - Browser navigation (Accept: text/html): mark + 302 to source URL.
+  #     This is the no-JS fallback path.
+  #   - AJAX (Accept: application/json): mark + return JSON. The view's
+  #     fetch() calls this so it can update row styling inline while
+  #     target=_blank handles the new-tab navigation in parallel.
+  # mark_as_read! is idempotent (preserves first read_at), so concurrent
+  # paths are safe.
+  def open
+    post = Post.find(params[:id])
+    post.mark_as_read!
+    respond_to do |format|
+      format.html { redirect_to post.url, allow_other_host: true }
+      format.json { render json: { id: post.id, read_at: post.read_at&.iso8601 } }
+    end
+  end
+
   private
 
   def lag_months_param

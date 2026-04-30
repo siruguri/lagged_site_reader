@@ -24,6 +24,20 @@ class Post < ApplicationRecord
   # window (default 4 months, per project goal of waiting before reading).
   scope :ready_to_read, ->(lag: 4.months) { where("published_at <= ?", Time.current - lag) }
 
+  scope :read,   -> { where.not(read_at: nil) }
+  scope :unread, -> { where(read_at: nil) }
+
+  def read?
+    read_at.present?
+  end
+
+  # Records the first time the post was opened. Idempotent: subsequent calls
+  # don't overwrite the original read_at, so we keep "first read" semantics.
+  def mark_as_read!
+    return if read_at.present?
+    update_column(:read_at, Time.current)
+  end
+
   def categories;        parse_json(categories_json) || []; end
   def tags;              parse_json(tags_json) || [];       end
   def links;             parse_json(links_json) || [];      end
