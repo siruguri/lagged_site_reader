@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
+export HOME=/home/deploy
 
 cd /srv/lagged_newsreader
 
