@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
   TYPE_LABELS = {
     "long_form"     => "Long-form posts",
-    "links_roundup" => "Links roundups"
+    "links_roundup" => "Water coolers"
   }.freeze
 
   def index
