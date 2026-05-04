@@ -27,7 +27,7 @@
   <p class="sub">Your reading lag (default 6 mos.).</p>
   <table>
     <thead>
-      <tr><th>Type</th><th>Count</th></tr>
+      <tr><th>Post type</th><th>Count</th></tr>
     </thead>
     <tbody>
       <% @counts_by_type.sort_by { |_type, count| -count }.each do |type, count| %>
