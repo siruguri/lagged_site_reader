@@ -14,7 +14,7 @@ git fetch --prune origin
 git reset --hard origin/main
 
 # Rebuild and restart
-docker compose pull --ignore-buildable
+docker compose pull redis
 docker compose up -d --build --remove-orphans
 
 # Optional: prune dangling images so disk doesn't fill over time
