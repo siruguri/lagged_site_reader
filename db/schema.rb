@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_29_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_14_000001) do
+  create_table "crawled_urls", force: :cascade do |t|
+    t.integer "crawl_attempts", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.integer "http_status"
+    t.datetime "last_crawled_at"
+    t.text "metadata_json"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
+    t.index ["status"], name: "index_crawled_urls_on_status"
+    t.index ["url"], name: "index_crawled_urls_on_url", unique: true
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "author_name"
     t.text "categories_json"
