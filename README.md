@@ -1,8 +1,13 @@
 # Everything App — Rails 8 app
 
-Crawls nakedcapitalism.com via the WordPress REST API, classifies each post as
-either long-form or links-roundup, and stores it in SQLite for later reading
-(with a deliberate ~4-month lag) and statistical analysis.
+A personal, multi-site content archiver. Each configured site is crawled on a
+schedule; a per-domain processor handles the site-specific extraction logic
+(HTML parsing, RSS/XML feeds, change detection, etc.). Archived content is
+stored in SQLite for later reading and statistical analysis.
+
+The first supported site is nakedcapitalism.com (WordPress REST API), which is
+classified as long-form posts or links-roundups and surfaced with a deliberate
+~4-month reading lag.
 
 ## Quick start
 
@@ -56,7 +61,12 @@ The three modes cover:
 ## Layout (after setup)
 
 ```
-lib/naked_capitalism/                # plain-Ruby crawler classes (Zeitwerk-autoloaded)
+lib/page_processors/                 # per-domain processing (Zeitwerk-autoloaded)
+  base.rb                            # Base class — subclass and implement #process(url, content)
+  null.rb                            # No-op fallback for unregistered domains
+lib/page_processors.rb               # Registry: PageProcessors.register / PageProcessors.for(url)
+
+lib/naked_capitalism/                # nakedcapitalism.com crawler (Zeitwerk-autoloaded)
   api_client.rb                      # WP REST client (Net::HTTP, retries, before-cursor pagination)
   post_classifier.rb                 # Title-pattern based: long_form vs links_roundup
   link_extractor.rb                  # Outbound URLs via Nokogiri
@@ -128,6 +138,43 @@ Live in `NakedCapitalism::PostClassifier::DEFAULT_LINKS_ROUNDUP_PATTERNS`:
 - `/\AAntidote\s+du\s+jour\b/i`
 
 Override via the constructor if you find titles that should/shouldn't match.
+
+## Page Processors
+
+Each domain can have a custom processor class that handles whatever extraction
+or analysis logic that site requires — HTML parsing, RSS/Atom feed parsing,
+change detection, etc.
+
+**Adding a new domain:**
+
+1. Create `lib/page_processors/my_site.rb` inheriting from `PageProcessors::Base`:
+
+```ruby
+module PageProcessors
+  class MySite < Base
+    def process(url, content)
+      # content is the raw fetched string (HTML, XML, …)
+      # return a Hash or nil
+    end
+  end
+end
+```
+
+2. Register it (e.g. in an initializer or at the bottom of the file):
+
+```ruby
+PageProcessors.register("example.com", PageProcessors::MySite)
+```
+
+3. Look up the right processor at call time:
+
+```ruby
+processor = PageProcessors.for("https://example.com/some/path")
+result = processor.process(url, fetched_content)
+```
+
+`PageProcessors.for` strips `www.`, matches on the canonical domain, and falls
+back to `PageProcessors::Null` (returns `nil`) for any unregistered URL.
 
 ## What this does NOT do (yet)
 
