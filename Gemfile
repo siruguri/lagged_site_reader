@@ -44,7 +44,7 @@ group :development do
 end
 
 
-# --- Naked Capitalism Archiver -----------------------------------
+# --- Everything App ----------------------------------------------
 gem "nokogiri",          "~> 1.16"
 gem "sidekiq",           "~> 7.0"
 gem "redis",             "~> 5.0"

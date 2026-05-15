@@ -3,10 +3,10 @@
 set -euo pipefail
 export HOME=/home/deploy
 
-cd /srv/lagged_newsreader
+cd /srv/everything_app
 
 # Log everything with timestamps to a file deploy can write to
-exec >> /srv/lagged_newsreader/deploy.log 2>&1
+exec >> /srv/everything_app/deploy.log 2>&1
 echo "===== $(date -Iseconds): deploy starting ====="
 
 # Pull the latest main, discarding any local drift

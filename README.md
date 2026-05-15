@@ -1,4 +1,4 @@
-# Naked Capitalism Archiver — Rails 8 app
+# Everything App — Rails 8 app
 
 Crawls nakedcapitalism.com via the WordPress REST API, classifies each post as
 either long-form or links-roundup, and stores it in SQLite for later reading
@@ -9,7 +9,7 @@ either long-form or links-roundup, and stores it in SQLite for later reading
 You need **Ruby 3.2+** on your Mac. Then:
 
 ```sh
-cd "naked capitalism archiver"
+cd everything_app
 ./setup_rails_app.sh
 ```
 

@@ -84,7 +84,7 @@ rsync -av \
   --exclude 'log/*'  --exclude 'tmp/*'  --exclude 'storage/*' \
   --exclude '.env'   --exclude 'config/master.key' \
   --exclude 'db/*.sqlite3*' \
-  "naked capitalism archiver/" deploy@<vps>:/srv/nc-archiver/
+  everything_app/ deploy@<vps>:/srv/everything_app/
 ```
 
 `config/master.key` is excluded on purpose — you'll set it via `.env` so it's
@@ -95,13 +95,13 @@ not pinned to disk on the VPS.
 On your Mac:
 
 ```sh
-cat "naked capitalism archiver/config/master.key"   # copy this value
+cat everything_app/config/master.key   # copy this value
 ```
 
 On the VPS:
 
 ```sh
-cd /srv/nc-archiver
+cd /srv/everything_app
 cp .env.example .env
 chmod 600 .env
 nano .env                  # paste: RAILS_MASTER_KEY=<value>
@@ -171,7 +171,7 @@ Snapshot it periodically:
 VOL=$(docker volume ls -q | grep sqlite_data)
 
 docker run --rm -v "$VOL":/db -v /srv/backups:/out ubuntu:24.04 \
-  tar czf "/out/nc-archiver-$(date +%F).tgz" -C /db .
+  tar czf "/out/everything_app-$(date +%F).tgz" -C /db .
 ```
 
 Stash that tarball off-host (rclone, restic, scp to home, whatever you use).
@@ -183,10 +183,10 @@ Stash that tarball off-host (rclone, restic, scp to home, whatever you use).
 rsync -av --delete \
   --exclude '.git' --exclude 'log/*' --exclude 'tmp/*' --exclude 'storage/*' \
   --exclude '.env' --exclude 'config/master.key' --exclude 'db/*.sqlite3*' \
-  "naked capitalism archiver/" deploy@<vps>:/srv/nc-archiver/
+  everything_app/ deploy@<vps>:/srv/everything_app/
 
 # on the VPS:
-cd /srv/nc-archiver
+cd /srv/everything_app
 docker compose up -d --build
 ```
 
