@@ -68,5 +68,8 @@ services:
 
 volumes:
   redis_data:
+    name: everything_app_redis_data
   sqlite_data:
+    name: everything_app_sqlite_data
   app_storage:
+    name: everything_app_app_storage

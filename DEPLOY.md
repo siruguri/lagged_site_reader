@@ -166,11 +166,12 @@ The whole archive is the SQLite file in the `sqlite_data` named volume.
 Snapshot it periodically:
 
 ```sh
-# project name = directory name unless you set COMPOSE_PROJECT_NAME.
-# `docker volume ls` shows the actual prefixed name.
-VOL=$(docker volume ls -q | grep sqlite_data)
-
-docker run --rm -v "$VOL":/db -v /srv/backups:/out ubuntu:24.04 \
+# Volume names are pinned via `name:` keys in docker-compose.yml, so they
+# don't depend on the compose project name.
+docker run --rm \
+  -v everything_app_sqlite_data:/db \
+  -v /srv/backups:/out \
+  ubuntu:24.04 \
   tar czf "/out/everything_app-$(date +%F).tgz" -C /db .
 ```
 
