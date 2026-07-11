@@ -1,5 +1,21 @@
 # Everything App — Rails 8 app
 
+Random shit I want to put together on a web app
+
+## Dev Ops information
+
+Some of the details of the setup I did are in deploy.md
+
+* Machine on Digital Ocean: ssh -i ~/.ssh/digital_ocean root@143.244.176.203
+* The web server is Caddy (not nginx or Apache.)
+# The app is deployed under /srv and belongs to the user "deploy"
+* There is a Go daemon that listens at /deploy where it receives a POST when there is a commit to main
+  * This runs deploy.sh which handles the git fetch; and the docker commands.
+
+This is important - see the part in deploy.md where it says how to set the master key in .env. .env is not checked into
+the repo; .env.example is, and it has to be copied to .env during initial setup.
+
+## Project 1
 A personal, multi-site content archiver. Each configured site is crawled on a
 schedule; a per-domain processor handles the site-specific extraction logic
 (HTML parsing, RSS/XML feeds, change detection, etc.). Archived content is
