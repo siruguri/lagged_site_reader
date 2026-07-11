@@ -31,3 +31,8 @@
 /config/master.key
 .env
 deploy.log
+openai_key.txt
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+
+config/*bak
