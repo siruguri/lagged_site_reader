@@ -45,7 +45,7 @@ end
 
 
 # --- Everything App ----------------------------------------------
-gem "nokogiri",          "~> 1.16"
+gem "nokogiri",          "~> 1.19"
 gem "sidekiq",           "~> 7.0"
 gem "redis",             "~> 5.0"
 gem "sidekiq-scheduler", "~> 5.0"
