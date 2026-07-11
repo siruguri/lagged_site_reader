@@ -18,7 +18,7 @@ class OpenaiClient
     @model = model
   end
 
-  def ask(prompt)
+  def ask(prompt, temperature: 0.2)
     response = post(
       model: @model,
       messages: [
@@ -26,7 +26,7 @@ class OpenaiClient
         { role: "user", content: prompt }
       ],
       max_tokens: 150,
-      temperature: 0.2
+      temperature: temperature
     )
 
     response.dig("choices", 0, "message", "content")&.strip
