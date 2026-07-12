@@ -21,7 +21,6 @@ Bundler.require(*Rails.groups)
 module EverythingApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.hosts << "www.lvh.me:3000"
     config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
