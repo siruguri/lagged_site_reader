@@ -15,6 +15,13 @@ Some of the details of the setup I did are in deploy.md
 This is important - see the part in deploy.md where it says how to set the master key in .env. .env is not checked into
 the repo; .env.example is, and it has to be copied to .env during initial setup.
 
+## Authentication
+
+Accounts are backed by Devise (`Account` model, email as the unique key).
+
+- Sign up: `/accounts/sign_up`
+- Log in: `/accounts/sign_in`
+
 ## Project 1
 A personal, multi-site content archiver. Each configured site is crawled on a
 schedule; a per-domain processor handles the site-specific extraction logic
