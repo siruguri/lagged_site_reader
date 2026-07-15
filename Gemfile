@@ -51,4 +51,5 @@ gem "redis",             "~> 5.0"
 gem "sidekiq-scheduler", "~> 5.0"
 gem "json"
 gem "haml-rails",        "~> 2.1"
+gem "devise",            "~> 4.9"
 # -----------------------------------------------------------------

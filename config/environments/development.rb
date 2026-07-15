@@ -33,6 +33,9 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # Write outgoing emails to tmp/mails instead of attempting real SMTP delivery.
+  config.action_mailer.delivery_method = :file
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 
