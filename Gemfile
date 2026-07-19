@@ -4,6 +4,8 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+# Tailwind CSS for Rails [https://github.com/rails/tailwindcss-rails]
+gem "tailwindcss-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
