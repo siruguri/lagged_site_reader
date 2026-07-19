@@ -84,7 +84,7 @@ body {
   border: 1px solid #eee;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  min-width: 120px;
+  min-width: 150px;
 }
 
 .user-menu:hover .user-menu-dropdown {
@@ -95,6 +95,7 @@ body {
   margin: 0;
 }
 
+.dropdown-link,
 .logout-link {
   display: block;
   width: 100%;
@@ -110,9 +111,10 @@ body {
   border-bottom: none;
 }
 
+.dropdown-link:hover,
 .logout-link:hover {
   background: #f9f9f9;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .navbar-spacer {
@@ -149,8 +151,8 @@ th, td {
 }
 th { font-weight: 600; color: #555; }
 
-a { color: #2557a7; text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:not([class]) { color: #2557a7; text-decoration: none; }
+a:not([class]):hover { text-decoration: underline; }
 
 code {
   background: #f4f4f4;
