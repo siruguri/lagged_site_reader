@@ -1,0 +1,13 @@
+.max-w-2xl.mx-auto.py-1.px-4
+
+  .flex.justify-between.items-center.mb-6.py-4
+    %h1.text-3xl.font-bold Your Writing
+    = link_to "New Submission", new_submission_path, class: "px-4 py-2 bg-slate-300 text-white-950 rounded-md hover:bg-slate-400"
+
+  - @submissions.each do |submission|
+    .border.rounded-md.p-4.mb-4
+      .flex.justify-between.w-full
+        %div
+          = link_to submission.title, submission_path(submission)
+        %div
+          = submission.created_at.strftime("%b %d, %Y")
