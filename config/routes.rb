@@ -22,5 +22,5 @@ Rails.application.routes.draw do
       constraints: { post_type: /long_form|links_roundup/ }
 
   # Defines the root path route ("/")
-  root "posts#index"
+  root "pages#landing"
 end

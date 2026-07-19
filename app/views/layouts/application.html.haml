@@ -23,7 +23,7 @@
             .user-menu
               %button.user-icon-btn{title: "Account menu"} 👤
               .user-menu-dropdown
-                = link_to "Logout", destroy_account_session_path, method: :delete, class: "logout-link"
+                = button_to "Logout", destroy_account_session_path, method: :delete, form_class: "logout-form", class: "logout-link"
           - else
             = link_to "Login", new_account_session_path, class: "login-btn"
 
