@@ -1,23 +1,24 @@
-%h2 Change your password
+.auth-container
+  .auth-card
+    %h2.auth-title Change your password
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  = f.hidden_field :reset_password_token
+    = render "devise/shared/error_messages", resource: resource
 
-  .field
-    = f.label :password, "New password"
-    %br
-    - if @minimum_password_length
-      %em= "(#{@minimum_password_length} characters minimum)"
-      %br
-    = f.password_field :password, autofocus: true, autocomplete: "new-password"
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, local: true) do |f|
+      = f.hidden_field :reset_password_token
 
-  .field
-    = f.label :password_confirmation, "Confirm new password"
-    %br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
+      .form-group
+        = f.label :password, "New password"
+        - if @minimum_password_length
+          %em.password-hint= "(#{@minimum_password_length} characters minimum)"
+        = f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-input"
 
-  .actions
-    = f.submit "Change my password"
+      .form-group
+        = f.label :password_confirmation, "Confirm new password"
+        = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input"
 
-= render "devise/shared/links"
+      .form-actions
+        = f.submit "Change my password", class: "btn-primary"
+
+    .auth-links
+      = render "devise/shared/links"
