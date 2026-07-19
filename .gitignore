@@ -36,3 +36,5 @@ openai_key.txt
 /config/*.key
 
 config/*bak
+/app/assets/builds/*
+!/app/assets/builds/.keep

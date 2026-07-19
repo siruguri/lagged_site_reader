@@ -1,0 +1,56 @@
+.landing-hero
+  .landing-content
+    %h1.hero-title Unleash Your Creativity
+    %p.hero-subtitle
+      Everything App is your personal canvas for thoughts, ideas, and inspiration.
+      A single place to capture, organize, and develop what matters to you.
+
+    .cta-buttons
+      - if account_signed_in?
+        = link_to "Go to Dashboard", posts_path, class: "cta-primary"
+      - else
+        = link_to "Get Started Free", new_account_session_path, class: "cta-primary"
+        = link_to "Learn More", "#features", class: "cta-secondary"
+
+.landing-features#features
+  .features-container
+    %h2 Everything You Need
+    .features-grid
+      .feature-card
+        .feature-icon 📝
+        %h3 Capture Ideas Instantly
+        %p Write long-form essays, quick thoughts, or anything in between. Your ideas flow naturally.
+
+      .feature-card
+        .feature-icon 🔗
+        %h3 Curate Your Inspiration
+        %p Save links, articles, and resources. Build your personal knowledge library without clutter.
+
+      .feature-card
+        .feature-icon ✅
+        %h3 Stay Focused
+        %p Manage your goals and tasks. Get clarity on what matters without digital noise.
+
+      .feature-card
+        .feature-icon 💡
+        %h3 Find Your Flow
+        %p Writing prompts and creative exercises to spark your imagination whenever you need it.
+
+      .feature-card
+        .feature-icon 🏗️
+        %h3 Build Intentionally
+        %p Organize your creative output. Watch your ideas grow into something meaningful.
+
+      .feature-card
+        .feature-icon 🌱
+        %h3 No Distractions
+        %p A clean, focused interface designed for deep thinking. Say goodbye to the doom scroll.
+
+.landing-cta
+  .cta-content
+    %h2 Ready to Start Creating?
+    %p Join creators, writers, and thinkers who are taking control of their creative lives.
+    - if account_signed_in?
+      %p You're all set. Explore your dashboard and start building.
+    - else
+      = link_to "Create Your Free Account", new_account_session_path, class: "cta-large"
