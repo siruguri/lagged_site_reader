@@ -1,22 +1,23 @@
-%h2 Log in
+.auth-container
+  .auth-card
+    %h2.auth-title Log in
 
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
+    = form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f|
+      .form-group
+        = f.label :email
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input"
 
-  .field
-    = f.label :password
-    %br
-    = f.password_field :password, autocomplete: "current-password"
+      .form-group
+        = f.label :password
+        = f.password_field :password, autocomplete: "current-password", class: "form-input"
 
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
+      - if devise_mapping.rememberable?
+        .form-group.checkbox-group
+          = f.check_box :remember_me
+          = f.label :remember_me
 
-  .actions
-    = f.submit "Log in"
+      .form-actions
+        = f.submit "Log in", class: "btn-primary"
 
-= render "devise/shared/links"
+    .auth-links
+      = render "devise/shared/links"
