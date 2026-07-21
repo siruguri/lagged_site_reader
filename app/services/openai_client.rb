@@ -7,6 +7,16 @@ require "net/http"
 # explicit system instruction, since token counts don't map 1:1 to characters.
 class OpenaiClient
   class Error < StandardError; end
+  SEED_WORDS = %w[lantern harbor granite whisper falcon orchard tundra velvet ember thicket].freeze
+  seed_word = SEED_WORDS.sample
+
+  WRITING_PROMPT_QUERY = <<~PROMPT.squish
+    Produce a short English phrase that isn't a sentence but that expresses
+    some coherent idea or concept; something like a subordinate clause, or
+    part of an idiom. Seed word (do not use it directly, just let it loosely
+    inspire the theme): #{seed_word}.
+  PROMPT
+
 
   API_URL = URI("https://api.openai.com/v1/chat/completions")
   SYSTEM_PROMPT = "Answer as briefly as possible. Avoid all conversational courtesies."
@@ -18,7 +28,7 @@ class OpenaiClient
     @model = model
   end
 
-  def ask(prompt, temperature: 0.2)
+  def ask(temperature: 0.2, prompt: WRITING_PROMPT_QUERY)
     response = post(
       model: @model,
       messages: [
