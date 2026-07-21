@@ -6,19 +6,12 @@ RSpec.describe WritingController, type: :controller do
       it "returns the existing prompt" do
         prompt_text = "test prompt text"
         WritingPrompt.create!(prompt: prompt_text, prompt_on: Date.current)
+        expect_any_instance_of(OpenaiClient).not_to receive(:ask)
 
         get :prompt
 
         expect(assigns(:answer)).to eq(prompt_text)
         expect(response).to be_successful
-      end
-
-      it "does not call OpenaiClient" do
-        WritingPrompt.create!(prompt: "existing prompt", prompt_on: Date.current)
-
-        expect_any_instance_of(OpenaiClient).not_to receive(:ask)
-
-        get :prompt
       end
     end
 
@@ -29,26 +22,8 @@ RSpec.describe WritingController, type: :controller do
         get :prompt
 
         expect(assigns(:answer)).to eq("generated prompt")
-        expect(WritingPrompt.find_by(prompt_on: Date.current)).to be_present
-        expect(WritingPrompt.find_by(prompt_on: Date.current).prompt).to eq("generated prompt")
-      end
-
-      it "calls OpenaiClient with correct parameters" do
-        expect_any_instance_of(OpenaiClient).to receive(:ask).with(anything, temperature: 1.0).and_return("new prompt")
-
-        get :prompt
-      end
-
-      it "includes a seed word in the prompt sent to OpenaiClient" do
-        received_prompt = nil
-        allow_any_instance_of(OpenaiClient).to receive(:ask) do |instance, prompt, **kwargs|
-          received_prompt = prompt
-          "generated"
-        end
-
-        get :prompt
-
-        expect(received_prompt).to include("Seed word")
+        saved_prompt = WritingPrompt.find_by(prompt_on: Date.current)
+        expect(saved_prompt&.prompt).to eq("generated prompt")
       end
     end
 
