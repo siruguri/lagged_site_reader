@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_19_010455) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_20_010001) do
   create_table "accounts", force: :cascade do |t|
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
@@ -80,6 +80,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_19_010455) do
     t.integer "visibility", default: 0, null: false
     t.index ["account_id", "created_at"], name: "index_submissions_on_account_id_and_created_at"
     t.index ["account_id"], name: "index_submissions_on_account_id"
+  end
+
+  create_table "writing_prompts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "prompt", null: false
+    t.date "prompt_on", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prompt_on"], name: "index_writing_prompts_on_prompt_on"
   end
 
   add_foreign_key "submissions", "accounts"
