@@ -18,7 +18,7 @@ RSpec.describe OpenaiClient do
       }.to_json
       stub_http_request(body: response_body)
 
-      result = client.ask("What is 2+2?")
+      result = client.ask(prompt: 'What is 2+2?')
       expect(result).to eq("test answer")
     end
 
@@ -31,7 +31,7 @@ RSpec.describe OpenaiClient do
       end
       stub_http_request(body: '{"choices": [{"message": {"content": "answer"}}]}')
 
-      client.ask("prompt")
+      client.ask(prompt: 'prompt')
 
       parsed = JSON.parse(request_body)
       expect(parsed["max_tokens"]).to eq(150)
@@ -48,7 +48,7 @@ RSpec.describe OpenaiClient do
       allow(http).to receive(:read_timeout=)
       allow(http).to receive(:request).and_return(http_response)
 
-      expect { client.ask("prompt") }.to raise_error(OpenaiClient::Error)
+      expect { client.ask(prompt: 'prompt') }.to raise_error(OpenaiClient::Error)
     end
   end
 
