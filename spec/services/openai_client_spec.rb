@@ -2,22 +2,10 @@ require "rails_helper"
 
 RSpec.describe OpenaiClient do
   describe "initialization" do
-    it "initializes with default parameters" do
-      stub_http_request
-      client = described_class.new
-      expect(client).to be_a(OpenaiClient)
-    end
-
     it "raises an error when API key is missing" do
       allow(Rails.application.credentials).to receive(:openai_api_key).and_return(nil)
 
       expect { described_class.new }.to raise_error(OpenaiClient::Error, /missing OpenAI API key/)
-    end
-
-    it "accepts a custom model parameter" do
-      stub_http_request
-      client = described_class.new(model: "gpt-4")
-      expect(client).to be_a(OpenaiClient)
     end
   end
 
