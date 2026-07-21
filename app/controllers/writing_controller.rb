@@ -9,7 +9,5 @@ class WritingController < ApplicationController
   def get_prompt_from_llm
     answer = OpenaiClient.new.ask(temperature: 1.0)
     WritingPrompt.create(prompt: answer, prompt_on: Date.current)
-
-    answer
   end
 end

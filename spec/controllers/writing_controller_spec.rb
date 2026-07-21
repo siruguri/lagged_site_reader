@@ -10,7 +10,7 @@ RSpec.describe WritingController, type: :controller do
 
         get :prompt
 
-        expect(assigns(:answer)).to eq(prompt_text)
+        expect(assigns(:answer).prompt).to eq(prompt_text)
         expect(response).to be_successful
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe WritingController, type: :controller do
 
         get :prompt
 
-        expect(assigns(:answer)).to eq("generated prompt")
+        expect(assigns(:answer).prompt).to eq("generated prompt")
         saved_prompt = WritingPrompt.find_by(prompt_on: Date.current)
         expect(saved_prompt&.prompt).to eq("generated prompt")
       end
