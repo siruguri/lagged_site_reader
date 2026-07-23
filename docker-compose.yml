@@ -41,6 +41,7 @@ services:
     volumes:
       - sqlite_data:/rails/db
       - app_storage:/rails/storage
+      - ./log:/rails/log
     ports:
       # Bind to localhost only — put a reverse proxy in front for HTTPS.
       - "127.0.0.1:3000:3000"
