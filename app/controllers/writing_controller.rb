@@ -3,6 +3,11 @@ class WritingController < ApplicationController
     writing_prompt = WritingPrompt.find_by(prompt_on: Date.current)
 
     @answer = writing_prompt || get_prompt_from_llm
+
+    respond_to do |format|
+      format.html
+      format.json { render json: { prompt: @answer.prompt } }
+    end
   end
 
   private

@@ -1,10 +1,16 @@
+- content_for :head do
+  %script{src: "/javascripts/submissions_prompt.js"}
+
 .max-w-2xl.mx-auto.py-8.px-4
 
-  %h1.text-3xl.font-bold.mb-6 Submit Your Writing
+  %h1.text-3xl.font-bold.mb-6 Write!
 
   = form_with(model: @submission, local: true) do |form|
     .mb-6
-      = form.label :title, class: "block text-sm font-medium mb-2"
+      .flex.gap-2.mb-2
+        = form.label :title, class: "block text-sm font-medium mt-2"
+        %button#get-prompt-btn.px-2.py-1.text-sm.bg-blue-500.text-white.rounded.hover:bg-blue-600.ml-auto{type: "button"}
+          Get Today's Prompt
       = form.text_field :title, placeholder: "Enter a title", class: "w-full px-3 py-2 border border-gray-300 rounded-md"
 
     .mb-6
