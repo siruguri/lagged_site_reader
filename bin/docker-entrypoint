@@ -4,8 +4,13 @@ set -e
 # Run db:prepare (create + migrate, seed if needed) before starting the web
 # server. Sidekiq doesn't need this — it'll bail loudly if migrations are
 # missing, which surfaces ordering problems immediately.
+echo "[docker-entrypoint] $1 $2 $3 $4" >&2
 if [ "${1:-}" = "bin/rails" ] && [ "${2:-}" = "server" ]; then
+  echo "[docker-entrypoint] Running db:prepare..." >&2
   ./bin/rails db:prepare
+  echo "[docker-entrypoint] db:prepare completed" >&2
+else
+  echo "[docker-entrypoint] Skipping db:prepare (command: $1 $2)" >&2
 fi
 
 exec "$@"
