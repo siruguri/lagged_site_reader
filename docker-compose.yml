@@ -39,8 +39,8 @@ services:
       WEB_CONCURRENCY: "1"
       RAILS_MAX_THREADS: "3"
     volumes:
-      - sqlite_data:/rails/db
-      - app_storage:/rails/storage
+      - ./db:/rails/db
+      - ./storage:/rails/storage
       - ./log:/rails/log
     ports:
       # Bind to localhost only — put a reverse proxy in front for HTTPS.
@@ -61,14 +61,10 @@ services:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       REDIS_URL: redis://redis:6379/0
     volumes:
-      - sqlite_data:/rails/db
-      - app_storage:/rails/storage
+      - ./db:/rails/db
+      - ./storage:/rails/storage
     command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
 volumes:
   redis_data:
     name: everything_app_redis_data
-  sqlite_data:
-    name: everything_app_sqlite_data
-  app_storage:
-    name: everything_app_app_storage
