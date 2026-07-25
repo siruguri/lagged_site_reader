@@ -10,8 +10,8 @@ exec >> /srv/everything_app/deploy.log 2>&1
 echo "===== $(date -Iseconds): deploy starting ====="
 
 # Pull the latest main, discarding any local drift
-git fetch --prune origin
-git reset --hard origin/main
+git fetch --prune github_remote
+git reset --hard github_remote/main
 
 # Rebuild and restart
 docker compose pull redis
