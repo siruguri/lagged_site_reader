@@ -10,6 +10,8 @@ exec >> /srv/everything_app/deploy.log 2>&1
 echo "===== $(date -Iseconds): deploy starting ====="
 
 # Pull the latest main, discarding any local drift
+git remote remove origin 2>/dev/null || true
+git remote add github_remote git@github-personal:siruguri/lagged_site_reader.git 2>/dev/null || git remote set-url github_remote git@github-personal:siruguri/lagged_site_reader.git
 git fetch --prune github_remote
 git reset --hard github_remote/main
 
