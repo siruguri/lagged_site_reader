@@ -1,6 +1,5 @@
 - content_for :head do
-  %script{src: "/javascripts/submissions_prompt.js"}
-  %script{src: "/javascripts/writing_timer.js"}
+  = javascript_import_module_tag "submissions_prompt", "writing_timer"
 
 .max-w-2xl.mx-auto.py-8.px-4
 
