@@ -16,7 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :submissions, only: [:index, :new, :create, :show]
+  resources :submissions, only: [:index, :new, :create, :show] do
+    member do
+      patch :toggle_status
+    end
+  end
 
   get 'writing_prompt', to: 'writing#prompt'
   get 'todo', to: 'pages#todo'

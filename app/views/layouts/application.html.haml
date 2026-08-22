@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= content_for(:title) || "Doom Scroll Preventer"
+    %title= content_for(:title) || "Get Your Writing Mojo On!"
     %meta{name: "viewport", content: "width=device-width,initial-scale=1"}
     %meta{name: "apple-mobile-web-app-capable", content: "yes"}
     = csrf_meta_tags
@@ -18,7 +18,7 @@
   %body
     %nav.navbar
       .navbar-content
-        .navbar-brand Everything App
+        .navbar-brand Writing Buddy
         .navbar-auth
           - if account_signed_in?
             .user-menu
