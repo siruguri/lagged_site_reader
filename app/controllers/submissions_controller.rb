@@ -13,6 +13,12 @@ class SubmissionsController < ApplicationController
     @submission = Submission.new
   end
 
+  def toggle_status
+    @submission = current_account.submissions.find(params[:id])
+    @submission.update!(status: @submission.published? ? "draft" : "published")
+    render json: { id: @submission.id, status: @submission.status }
+  end
+
   def create
     @submission = current_account.submissions.build(submission_params)
     if @submission.save

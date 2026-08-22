@@ -617,3 +617,119 @@ ul li {
 ol li {
   list-style-type: decimal;
 }
+
+/* Submission cards (submissions#index) */
+.submission-card {
+  background: oklch(0.995 0.004 80);
+  border: 1px solid oklch(0.87 0.015 70);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.submission-card:hover {
+  box-shadow: 0 6px 20px -6px oklch(0.4 0.03 60 / 0.22);
+  transform: translateY(-2px);
+  border-color: oklch(0.8 0.02 70);
+}
+
+.submission-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.submission-title {
+  font-family: "Source Serif 4", ui-serif, Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: oklch(0.24 0.02 50);
+  text-decoration: none;
+  min-width: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submission-title:hover {
+  color: oklch(0.4 0.1 75);
+  text-decoration: underline;
+}
+
+.submission-meta {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: oklch(0.55 0.02 60);
+  margin-top: 8px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.status-toggle:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 150ms ease, opacity 150ms ease;
+}
+
+.status-toggle.draft .status-label { color: oklch(0.5 0.08 75); }
+.status-toggle.published .status-label { color: oklch(0.42 0.11 155); }
+.status-toggle:hover .status-label { opacity: 0.8; }
+
+.switch-track {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: background 150ms ease, box-shadow 150ms ease;
+}
+
+.status-toggle.draft .switch-track {
+  background: oklch(0.89 0.035 75);
+  justify-content: flex-start;
+}
+
+.status-toggle.published .switch-track {
+  background: oklch(0.6 0.13 155);
+  justify-content: flex-end;
+}
+
+.status-toggle.draft:hover .switch-track { background: oklch(0.84 0.05 75); }
+.status-toggle.published:hover .switch-track { background: oklch(0.54 0.14 155); }
+.status-toggle:active .switch-track { transform: scale(0.94); }
+
+.switch-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: oklch(0.995 0.004 80);
+  box-shadow: 0 1px 3px oklch(0.35 0.03 60 / 0.4);
+  transition: box-shadow 150ms ease;
+}
+
+.status-toggle:hover .switch-thumb {
+  box-shadow: 0 2px 6px oklch(0.35 0.03 60 / 0.5);
+}

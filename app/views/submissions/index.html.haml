@@ -1,13 +1,48 @@
+- content_for :head do
+  %link{rel: "preconnect", href: "https://fonts.googleapis.com"}
+  %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"}
+
 .max-w-2xl.mx-auto.py-1.px-4
 
   .flex.justify-between.items-center.mb-6.py-4
-    %h1.text-3xl.font-bold Your Writing
+    %h1.text-3xl.font-bold Your Submissions
     = link_to "New Submission", new_submission_path, class: "px-4 py-2 bg-slate-300 text-white-950 rounded-md hover:bg-slate-400"
 
   - @submissions.each do |submission|
-    .border.rounded-md.p-4.mb-4
-      .flex.justify-between.w-full
-        %div
-          = link_to submission.title, submission_path(submission)
-        %div
-          = submission.created_at.strftime("%b %d, %Y")
+    .submission-card
+      .submission-card-top
+        = link_to submission.title, submission_path(submission), class: "submission-title"
+        %button.status-toggle{ type: "button", class: submission.status, data: { toggle_status_url: toggle_status_submission_path(submission) }, "aria-pressed": submission.published? }
+          %span.status-label= submission.status.capitalize
+          .switch-track
+            .switch-thumb
+      .submission-meta= submission.created_at.strftime("%b %d, %Y")
+
+  :javascript
+    document.addEventListener("click", function (event) {
+      var button = event.target.closest(".status-toggle[data-toggle-status-url]");
+      if (!button) return;
+
+      var url = button.dataset.toggleStatusUrl;
+      var csrfToken = document.querySelector('meta[name="csrf-token"]');
+
+      button.disabled = true;
+      fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Accept": "application/json",
+          "X-CSRF-Token": csrfToken ? csrfToken.content : ""
+        },
+        credentials: "same-origin"
+      })
+        .then(function (res) { return res.ok ? res.json() : Promise.reject(res); })
+        .then(function (data) {
+          button.classList.remove("draft", "published");
+          button.classList.add(data.status);
+          button.setAttribute("aria-pressed", data.status === "published");
+          button.querySelector(".status-label").textContent =
+            data.status.charAt(0).toUpperCase() + data.status.slice(1);
+        })
+        .catch(function (err) { console.error("toggle status failed", err); })
+        .finally(function () { button.disabled = false; });
+    });
