@@ -733,3 +733,29 @@ ol li {
 .status-toggle:hover .switch-thumb {
   box-shadow: 0 2px 6px oklch(0.35 0.03 60 / 0.5);
 }
+
+.new-submission-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: oklch(0.24 0.02 50);
+  color: oklch(0.97 0.012 75);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.new-submission-btn:hover {
+  background: oklch(0.32 0.03 60);
+  box-shadow: 0 4px 14px -4px oklch(0.3 0.03 60 / 0.35);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.new-submission-btn:active {
+  transform: translateY(0);
+}

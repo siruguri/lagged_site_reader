@@ -6,7 +6,11 @@
 
   .flex.justify-between.items-center.mb-6.py-4
     %h1.text-3xl.font-bold Your Submissions
-    = link_to "New Submission", new_submission_path, class: "px-4 py-2 bg-slate-300 text-white-950 rounded-md hover:bg-slate-400"
+    = link_to new_submission_path, class: "new-submission-btn" do
+      %svg{width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.4", "stroke-linecap": "round", "stroke-linejoin": "round"}
+        %path{d: "M12 5v14"}
+        %path{d: "M5 12h14"}
+      New Submission
 
   - @submissions.each do |submission|
     .submission-card
