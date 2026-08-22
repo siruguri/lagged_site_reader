@@ -9,9 +9,11 @@
     .mb-6
       .flex.gap-2.mb-2
         = form.label :title, class: "block text-sm font-medium mt-2"
-        %button#get-prompt-btn.px-2.py-1.text-sm.bg-blue-500.text-white.rounded.hover:bg-blue-600.ml-auto{type: "button"}
+        %button#get-prompt-btn.px-2.py-1.text-sm.bg-blue-500.text-white.rounded.hover:bg-blue-600.disabled:opacity-50.disabled:cursor-not-allowed.ml-auto{type: "button"}
           Get Today's Prompt
-      = form.text_field :title, placeholder: "Enter a title", class: "w-full px-3 py-2 border border-gray-300 rounded-md"
+      .relative
+        = form.text_field :title, placeholder: "Enter a title", class: "w-full px-3 py-2 border border-gray-300 rounded-md pr-10"
+        #prompt-spinner.hidden{class: "animate-spin rounded-full h-5 w-5 border-2 border-gray-300 border-t-blue-500 absolute right-3 top-1/2 -translate-y-1/2"}
 
     .mb-6
       .flex.items-center.justify-between.mb-2

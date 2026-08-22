@@ -2,6 +2,11 @@
 
 Random shit I want to put together on a web app
 
+## Starting The Server
+
+Run `bin/dev` - this uses `Procfile.dev`
+
+
 ## Dev Ops information
 
 Some of the details of the setup I did are in deploy.md
