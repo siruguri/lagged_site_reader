@@ -1,55 +1,94 @@
 .landing-hero
   .landing-content
-    %h1.hero-title Unleash Your Creativity
+    %h1.hero-title Write Daily. Critique Daily. Grow Together.
     %p.hero-subtitle
-      Writing Buddy is your personal canvas for thoughts, ideas, and inspiration.
-      A single place to capture, organize, and develop what matters to you.
+      Writing Buddy find you fellow writers to pair with for short sprints, say 5 to 7 days.
+      Every day you write something brief but meaningful to you, and then critique your buddy's piece.
+      No solo grinding — just a small group of people holding each other to it.
 
     .cta-buttons
       - if account_signed_in?
         = link_to "Go to Dashboard", posts_path, class: "cta-primary"
       - else
         = link_to "Get Started Free", new_account_session_path, class: "cta-primary"
-        = link_to "Learn More", "#features", class: "cta-secondary"
+        = link_to "See How It Works", "#how-it-works", class: "cta-secondary"
+
+-# Static placeholder numbers for now — "community stats" to be wired up to live data later.
+.landing-stats
+  .stats-container
+    .stat
+      .stat-number 320+
+      .stat-label writers active this week
+    .stat
+      .stat-number 1,800+
+      .stat-label critiques exchanged this month
+    .stat
+      .stat-number 48
+      .stat-label weekly cohorts completed
+    .stat
+      .stat-number 91%
+      .stat-label finish the week they start
+
+.landing-how#how-it-works
+  .how-container
+    %h2 How a Sprint Works
+    %p.how-subtitle One week. One small group. Two daily habits.
+    .how-grid
+      .how-step
+        .how-number 1
+        %h3 Join a Weekly Cohort
+        %p Pick a track that fits your writing — flash fiction, poetry, personal essay — and get matched with a small group of writers like you.
+      .how-step
+        .how-number 2
+        %h3 Write Something, Every Day
+        %p Short pieces, low pressure. The goal is momentum and honesty, not a masterpiece.
+      .how-step
+        .how-number 3
+        %h3 Critique Someone, Every Day
+        %p Read a fellow writer's piece and respond with real feedback. You give a critique for every one you receive.
+      .how-step
+        .how-number 4
+        %h3 Finish the Week Together
+        %p After seven days, the cohort wraps. Go again with the same group, or start fresh with new writers next week.
 
 .landing-features#features
   .features-container
-    %h2 Everything You Need
+    %h2 Built for Showing Up
     .features-grid
       .feature-card
-        .feature-icon 📝
-        %h3 Capture Ideas Instantly
-        %p Write long-form essays, quick thoughts, or anything in between. Your ideas flow naturally.
+        .feature-icon 🤝
+        %h3 Matched With Real Writers
+        %p Get grouped with people at your level, writing in your genre — not a faceless feed of strangers.
 
       .feature-card
-        .feature-icon 🔗
-        %h3 Curate Your Inspiration
-        %p Save links, articles, and resources. Build your personal knowledge library without clutter.
+        .feature-icon 🗓️
+        %h3 Fixed-Period Commitments
+        %p A week is short enough to commit to and long enough to build a habit. Sign up, show up, then decide if you go again.
 
       .feature-card
-        .feature-icon ✅
-        %h3 Stay Focused
-        %p Manage your goals and tasks. Get clarity on what matters without digital noise.
+        .feature-icon ✍️
+        %h3 Mostly Short-Form Pieces
+        %p Bite-sized writing you can finish in a sitting, and critique in one too. Consistency beats length.
 
       .feature-card
-        .feature-icon 💡
-        %h3 Find Your Flow
-        %p Writing prompts and creative exercises to spark your imagination whenever you need it.
+        .feature-icon 💬
+        %h3 Critiques That Go Both Ways
+        %p Every writer in the cohort gives feedback and gets it back. No lurking, no one-sided asks.
 
       .feature-card
-        .feature-icon 🏗️
-        %h3 Build Intentionally
-        %p Organize your creative output. Watch your ideas grow into something meaningful.
+        .feature-icon 🔥
+        %h3 Streaks That Mean Something
+        %p Track your daily writing and critiquing side by side — the two habits that actually keep you improving.
 
       .feature-card
         .feature-icon 🌱
-        %h3 No Distractions
-        %p A clean, focused interface designed for deep thinking. Say goodbye to the doom scroll.
+        %h3 A Community, Not a Void
+        %p Writing is solitary by default. This makes it a little less so.
 
 .landing-cta
   .cta-content
-    %h2 Ready to Start Creating?
-    %p Join creators, writers, and thinkers who are taking control of their creative lives.
+    %h2 Ready to Commit to a Week?
+    %p Join a cohort of writers who show up daily to write and critique — and see what a week of real accountability does for your writing.
     - if account_signed_in?
       %p You're all set. Explore your dashboard and start building.
     - else

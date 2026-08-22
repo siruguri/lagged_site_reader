@@ -283,6 +283,89 @@ tr.is-read td a      { color: #888; }
   box-shadow: 0 4px 12px rgba(37, 87, 167, 0.3);
 }
 
+.landing-stats {
+  padding: 2.5rem 1rem;
+  background: #1a1a1a;
+}
+
+.stats-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 0.25rem;
+}
+
+.landing-how {
+  padding: 4rem 1rem;
+}
+
+.how-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.how-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.how-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0 0 3rem;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.how-step {
+  text-align: center;
+}
+
+.how-number {
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: #2557a7;
+  color: #fff;
+  font-weight: 700;
+}
+
+.how-step h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+  color: #1a1a1a;
+}
+
+.how-step p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
 .landing-features {
   padding: 4rem 1rem;
   background: #fafbfc;
