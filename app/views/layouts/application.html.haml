@@ -18,7 +18,8 @@
   %body
     %nav.navbar
       .navbar-content
-        .navbar-brand Writing Buddy
+        .navbar-brand
+          = link_to 'Writing Buddy', root_path
         .navbar-auth
           - if account_signed_in?
             .user-menu
