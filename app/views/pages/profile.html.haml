@@ -1,6 +1,8 @@
 - content_for :head do
   %link{rel: "preconnect", href: "https://fonts.googleapis.com"}
   %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"}
+  %link{rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.css"}
+  = javascript_import_module_tag "profile_avatar"
 
 .max-w-2xl.mx-auto.py-1.px-4
 
@@ -13,6 +15,7 @@
       .profile-avatar-col
         .avatar-upload
           .avatar-circle
+            %img#avatar-preview.avatar-preview-img{style: "display:none;", alt: "Your profile photo"}
             %svg.avatar-icon{width: "48", height: "48", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "1.6", "stroke-linecap": "round", "stroke-linejoin": "round"}
               %circle{cx: "12", cy: "8", r: "4"}
               %path{d: "M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"}
@@ -34,3 +37,20 @@
 
     .profile-actions
       %button.save-profile-btn{type: "button"} Save Profile
+
+  #crop-modal.crop-modal-overlay{style: "display:none;"}
+    .crop-modal
+      %h3.crop-modal-title Adjust your photo
+      .crop-image-wrapper
+        %img#crop-image
+      .crop-zoom-control
+        %svg.crop-zoom-icon.crop-zoom-icon-sm{width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round"}
+          %circle{cx: "11", cy: "11", r: "7"}
+          %path{d: "M21 21l-4.3-4.3"}
+        %input#crop-zoom-slider.crop-zoom-slider{type: "range", min: "0", max: "3", step: "0.01", value: "0"}
+        %svg.crop-zoom-icon.crop-zoom-icon-lg{width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round"}
+          %circle{cx: "11", cy: "11", r: "7"}
+          %path{d: "M21 21l-4.3-4.3"}
+      .crop-modal-actions
+        %button#crop-cancel-btn.crop-btn.crop-btn-secondary{type: "button"} Cancel
+        %button#crop-apply-btn.crop-btn.crop-btn-primary{type: "button"} Apply
