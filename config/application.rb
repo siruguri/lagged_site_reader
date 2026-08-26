@@ -5,7 +5,7 @@ require "rails"
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
-# require "active_storage/engine"
+require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 # require "action_mailbox/engine"
@@ -39,5 +39,9 @@ module EverythingApp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Serve Active Storage files through the Rails app instead of redirecting
+    # to signed S3 URLs, so the bucket can stay private (Block Public Access on).
+    config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
 end

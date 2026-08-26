@@ -17,6 +17,9 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  # Store uploaded files on local disk instead of hitting S3 in development.
+  config.active_storage.service = :local
+
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?

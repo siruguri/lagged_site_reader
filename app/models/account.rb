@@ -6,4 +6,7 @@ class Account < ApplicationRecord
          :confirmable
 
   has_many :submissions, dependent: :destroy
+  has_one :profile, dependent: :destroy
+
+  after_create :create_profile!
 end

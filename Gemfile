@@ -58,4 +58,5 @@ gem "sidekiq-scheduler", "~> 5.0"
 gem "json"
 gem "devise",            "~> 5.0"
 gem "haml-rails",        "~> 3.1"
+gem "aws-sdk-s3",        "~> 1.0", require: false
 # -----------------------------------------------------------------
