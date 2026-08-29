@@ -61,6 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) closeModal()
   })
 
+  const uploadAvatar = (file) => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')
+    const formData = new FormData()
+    formData.append('avatar', file)
+
+    return fetch('/profile/avatar', {
+      method: 'PATCH',
+      headers: {
+        'X-CSRF-Token': csrfToken ? csrfToken.content : '',
+      },
+      credentials: 'same-origin',
+      body: formData,
+    })
+  }
+
   applyBtn?.addEventListener('click', () => {
     if (!cropper) return
 
@@ -79,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
       cropper.destroy()
       cropper = null
       modal.style.display = 'none'
+
+      uploadAvatar(croppedFile).catch(() => {})
     }, 'image/png')
   })
 })

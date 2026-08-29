@@ -1,0 +1,9 @@
+.profile-fields-col#profile_fields
+  = form_with model: profile, url: profile_path, method: :patch, id: "profile-form" do |f|
+    .profile-field
+      = f.label :name, "Name", class: "profile-label"
+      = f.text_field :name, class: "profile-input", placeholder: "Your full name"
+
+    .profile-field
+      = f.label :bio, "Bio", class: "profile-label"
+      = f.text_area :bio, class: "profile-input profile-textarea", rows: 6, placeholder: "Tell your writing buddies a bit about yourself..."

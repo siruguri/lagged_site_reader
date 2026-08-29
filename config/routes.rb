@@ -21,10 +21,12 @@ Rails.application.routes.draw do
       patch :toggle_status
     end
   end
+  get 'profile', to: 'profiles#show'
+  patch 'profile', to: 'profiles#update'
+  patch 'profile/avatar', to: 'profiles#update_avatar'
 
   get 'writing_prompt', to: 'writing#prompt'
   get 'todo', to: 'pages#todo'
-  get 'profile', to: 'pages#profile'
   get "posts/:post_type", to: "posts#by_type", as: :posts_by_type,
       constraints: { post_type: /long_form|links_roundup/ }
 
