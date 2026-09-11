@@ -22,7 +22,7 @@ class SubmissionsController < ApplicationController
   def create
     @submission = current_account.submissions.build(submission_params)
     if @submission.save
-      redirect_to root_path, notice: 'Submission created successfully.'
+      redirect_to submissions_path, notice: 'Submission created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,6 +31,6 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    params.require(:submission).permit(:title, :content, :status, :visibility)
+    params.require(:submission).permit(:title, :content, :status, :visibility, :typing_duration_seconds)
   end
 end

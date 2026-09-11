@@ -1,6 +1,7 @@
 document.addEventListener('turbo:load', () => {
   const contentField = document.querySelector('textarea[name="submission[content]"]');
   const timerDisplay = document.getElementById('writing-timer');
+  const durationField = document.getElementById('typing-duration-seconds');
   if (!contentField || !timerDisplay) return;
 
   const IDLE_TIMEOUT_MS = 3000;
@@ -16,6 +17,7 @@ document.addEventListener('turbo:load', () => {
 
   const updateDisplay = () => {
     timerDisplay.textContent = formatTime(elapsedSeconds);
+    if (durationField) durationField.value = elapsedSeconds;
   };
 
   const stopTicking = () => {

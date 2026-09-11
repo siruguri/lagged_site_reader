@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_045204) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_11_051849) do
   create_table "accounts", force: :cascade do |t|
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
@@ -113,6 +113,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_045204) do
     t.datetime "created_at", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
+    t.integer "typing_duration_seconds", default: 0, null: false
     t.datetime "updated_at", null: false
     t.integer "visibility", default: 0, null: false
     t.index ["account_id", "created_at"], name: "index_submissions_on_account_id_and_created_at"
