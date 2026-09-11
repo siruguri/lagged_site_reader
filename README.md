@@ -29,7 +29,8 @@ Some of the details of the setup I did are in deploy.md
 
 * Machine on Digital Ocean: ssh -i ~/.ssh/digital_ocean root@143.244.176.203
 * The web server is Caddy (not nginx or Apache.)
-# The app is deployed under /srv and belongs to the user "deploy"
+* The app is deployed under /srv and belongs to the user "deploy"
+  * cd to /srv/everything_app to see the app
 * There is a Go daemon that listens at /deploy where it receives a POST when there is a commit to main
   * This runs deploy.sh which handles the git fetch; and the docker commands.
 

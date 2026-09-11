@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_account!
-  before_action :set_profile, only: [:show, :update]
+  before_action :set_profile
 
   def show
   end
@@ -10,14 +10,14 @@ class ProfilesController < ApplicationController
   end
 
   def update_avatar
-    current_account.profile.avatar.attach(params.require(:avatar))
-    render json: { avatar_url: url_for(current_account.profile.avatar) }
+    @profile.avatar.attach(params.require(:avatar))
+    render json: { avatar_url: url_for(@profile.avatar) }
   end
 
   private
 
   def set_profile
-    @profile = current_account.profile
+    @profile = current_account.profile || current_account.create_profile!
   end
 
   def profile_params
