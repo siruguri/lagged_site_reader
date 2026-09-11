@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const promptBtn = document.getElementById('get-prompt-btn');
   if (!promptBtn) return;
 

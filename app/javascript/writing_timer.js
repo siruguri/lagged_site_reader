@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const contentField = document.querySelector('textarea[name="submission[content]"]');
   const timerDisplay = document.getElementById('writing-timer');
   if (!contentField || !timerDisplay) return;

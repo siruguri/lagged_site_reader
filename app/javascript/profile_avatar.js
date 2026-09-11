@@ -1,6 +1,6 @@
 import Cropper from "cropperjs"
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const fileInput = document.getElementById('avatar-upload-input')
   if (!fileInput) return
 
