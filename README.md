@@ -25,12 +25,18 @@ The setup script (some of this relates to the site scraper idea described in doc
 
 ## Dev Ops information
 
-Some of the details of the setup I did are in deploy.md
+Some of the details of the setup I did are in new_setup.md
 
 * Machine on Digital Ocean: ssh -i ~/.ssh/digital_ocean root@143.244.176.203
 * The web server is Caddy (not nginx or Apache.)
 * The app is deployed under /srv and belongs to the user "deploy"
   * cd to /srv/everything_app to see the app
+* The app is running in a Docker container, so to run console, do:
+  * `cd /srv/everything_app`
+  * `docker compose exec web bin/rails console`
+  * (similarly, `docker compose exec web bash` gets you a shell, and
+    `docker compose logs -f web` tails the logs — see `new_setup.md` for
+    the full ops cheat sheet)
 * There is a Go daemon that listens at /deploy where it receives a POST when there is a commit to main
   * This runs deploy.sh which handles the git fetch; and the docker commands.
 
