@@ -1,25 +1,22 @@
-document.addEventListener('turbo:load', () => {
-  const promptBtn = document.getElementById('get-prompt-btn');
+document.addEventListener('click', async (e) => {
+  const promptBtn = e.target.closest('#get-prompt-btn');
   if (!promptBtn) return;
 
+  e.preventDefault();
   const spinner = document.getElementById('prompt-spinner');
+  promptBtn.disabled = true;
+  spinner?.classList.remove('hidden');
 
-  promptBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
-    promptBtn.disabled = true;
-    spinner?.classList.remove('hidden');
+  try {
+    const response = await fetch('/writing_prompt.json');
+    const data = await response.json();
+    const titleField = document.querySelector('input[name="submission[title]"]');
 
-    try {
-      const response = await fetch('/writing_prompt.json');
-      const data = await response.json();
-      const titleField = document.querySelector('input[name="submission[title]"]');
-
-      if (data.prompt && titleField) {
-        titleField.value = data.prompt;
-      }
-    } finally {
-      promptBtn.disabled = false;
-      spinner?.classList.add('hidden');
+    if (data.prompt && titleField) {
+      titleField.value = data.prompt;
     }
-  });
+  } finally {
+    promptBtn.disabled = false;
+    spinner?.classList.add('hidden');
+  }
 });

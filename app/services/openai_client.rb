@@ -46,16 +46,15 @@ class OpenaiClient
   private
 
   def writing_prompt_query
-    seed_word = SeedPrompts::SEED_WORDS.sample
+    seed_words = SeedPrompts::SEED_WORDS.sample(10)
     phrase_form = PHRASE_FORMS.sample
 
     <<~PROMPT.squish
-      Produce a short English phrase that isn't a sentence but that expresses
-      some coherent idea or concept, in the form of #{phrase_form}. To help
-      randomize the output, this prompt contains a seed word - it's imperative
-      that this word, and any direct synonym or paraphrase of it, not appear
-      in the phrase; it's only there to loosely inspire the theme in a way
-      that shouldn't be obvious from the result: #{seed_word}.
+      Produce a short English phrase that isn't a complete sentence and that expresses
+      some coherent idea or concept, in the form of a #{phrase_form}. It's meant to
+      serve as a writing prompt for someone to write a short piece in any style.
+      Here are some sample words to loosely inspire the theme of the short phrase.
+      Do not use these words themselves: #{seed_words}.
     PROMPT
   end
 
